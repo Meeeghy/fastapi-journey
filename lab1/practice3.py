@@ -1,7 +1,6 @@
-from fastapi import FastAPI   # TODO: Import FastAPI
+from fastapi import FastAPI  
 
-app = FastAPI()               # TODO: Initialize FastAPI app
-
-@app.get("/")                 # TODO: Define root endpoint
+app = FastAPI()               
+@app.get("/")                 
 def read_root():
     return {"message": "Greetings from your FastAPI spaceship!"}
