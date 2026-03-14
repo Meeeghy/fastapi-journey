@@ -2,33 +2,27 @@
 
 ## 1. Why I chose each Pydantic field type
 
-I used Pydantic models to organize the data in my API.
-
-For the **Transaction** model, I used `int` for `id` because each transaction needs a unique number.
-I used `str` for `title` because it stores the name or short description of the transaction.
-The `amount` is a `float` because money values can include decimals.
-The `description` is `Optional[str]` because sometimes a transaction may not need extra details.
-The `categories` field is a `List[Category]` since one transaction can have one or more categories.
-
-For the **Category** model, the `name` is a `str` because it stores the category name.
-The `type` is an `Enum` so that only specific category types are allowed.
-
----
+- `id: int` — IDs are whole numbers, no decimals needed
+- `title: str` — the transaction name is text
+- `amount: float` — money can have decimals like 9.99
+- `description: Optional[str]` — not every transaction needs a description, so it can be empty
+- `categories: List[Category]` — a transaction can have more than one category
+- `name: str` — category name is text
+- `type: Category_Type` — category type can only be "income" or "expense", nothing else
 
 ## 2. What each validation rule protects against
 
-The validation rules help make sure the data sent to the API is correct.
-
-The `min_length` and `max_length` for strings make sure the text is not too short or too long.
-The `amount` field uses `gt=0` to make sure the transaction amount is positive.
-The `Enum` for category type makes sure only allowed values are used.
-The optional `description` allows the user to leave it empty if they want.
-
----
+- `id: Field(ge=1)` — prevents using 0 or negative numbers as an ID
+- `title: Field(min_length=2, max_length=50)` — prevents empty or too long titles
+- `amount: Field(gt=0)` — prevents adding a transaction with zero or negative money
+- `description: Optional` — allows the user to skip the description without getting an error
+- `Category_Type (enum)` — prevents invalid types like "random" or "salary"
+- `name: Field(min_length=2, max_length=20)` — prevents empty or too long category names
 
 ## 3. Which endpoint uses async in a meaningful way and why
 
 All endpoints use `async def` because FastAPI works well with asynchronous functions.
 
-The `POST /transactions/` endpoint uses `await asyncio.sleep(1)` to simulate a delay, like when saving data to a database.
-This shows how async can handle waiting operations while the server continues working.
+The `GET /transactions/{transaction_id}` endpoint uses `await asyncio.sleep(1)` 
+to simulate a delay, like when fetching data from a real database.
+This shows how async can handle waiting without freezing the whole server.
