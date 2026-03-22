@@ -51,6 +51,7 @@ async def delete_transaction(transaction_id: int):
         if t.id == transaction_id:
             fake_db.remove(t)
             return {"message": f"Transaction {transaction_id} deleted"}
+    # raise proper 404 error instead of returning plain dict
     raise HTTPException(
         status_code=404,
         detail=f"Transaction with ID {transaction_id} was not found"
