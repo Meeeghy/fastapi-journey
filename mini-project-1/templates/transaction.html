@@ -1,0 +1,89 @@
+<!-- TODO: This file must be named transaction.html and placed inside mini-project-1/templates/ -->
+
+{% extends "home.html" %}
+
+<!-- TODO: Block name must match home.html exactly — keep as transaction_container -->
+{% block transaction_container %}
+
+<main class="container">
+    <hr>
+
+    <!-- ─── ADD FORM ─────────────────────────────────────────────────────── -->
+    <section class="container-fluid mb-4">
+        <form method="post">
+            <div class="input-group">
+                <input
+                    class="form-control"
+                    type="text"
+                    name="item"
+                    aria-label="Add a transaction"
+                    placeholder="Enter transaction description"
+                    value="{{ item }}"
+                />
+                <div class="input-group-append">
+                    <button class="btn btn-warning" type="submit">
+                        <i class="fas fa-wallet mr-1"></i> Add Transaction
+                    </button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <!-- ─── SINGLE ITEM VIEW ─────────────────────────────────────────────
+         TODO: field names must match your Transaction Pydantic model exactly.
+         Expected fields: transaction.id, transaction.description, transaction.amount, transaction.category
+         Add or remove <p> rows to match your actual model fields.         -->
+
+    {% if transaction is defined and transaction %}
+    <article class="card shadow-sm mb-4">
+        <div class="card-header bg-warning">
+            <h4 class="mb-0"><i class="fas fa-receipt mr-2"></i>Transaction Details</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>ID:</strong> {{ transaction.id }}</p>
+            <p><strong>Title:</strong> {{ transaction.title }}</p>
+            <p><strong>Amount:</strong> ${{ transaction.amount }}</p>
+            <p><strong>Description:</strong> {{ transaction.description }}</p>
+            <p><strong>Categories:</strong> 
+    {% for cat in transaction.categories %}
+        {{ cat.name }} ({{ cat.type }})
+    {% endfor %}
+</p>
+
+            <!-- TODO: If your Transaction model has nested categories, display count here -->
+            <p><strong>Sub-categories:</strong> {{ transaction.categories | length }} linked</p>
+
+            <a href="/home" class="btn btn-outline-secondary btn-sm mt-2">
+                <i class="fas fa-arrow-left mr-1"></i> Back to list
+            </a>
+        </div>
+    </article>
+
+    {% else %}
+
+    <!-- ─── LIST VIEW ────────────────────────────────────────────────────
+         TODO: Loop variable is "transaction", list variable is "transactions"
+               Link href must be /transaction/ID         -->
+    <section class="container-fluid">
+        <h2 class="text-center mb-3">
+            <i class="fas fa-list mr-2"></i>All Transactions
+        </h2>
+        <div class="card shadow-sm">
+            <ul class="list-group list-group-flush">
+                {% for transaction in transactions %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <span class="badge badge-warning badge-pill mr-2">{{ loop.index }}</span>
+                        <a href="/transaction/{{ transaction.id }}">{{ transaction.title }}</a>
+                    </span>
+                    <span class="text-muted small">${{ transaction.amount }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    </section>
+
+</main>
+
+{% endblock %}

@@ -11,7 +11,7 @@ class Category(BaseModel):
     type: Category_Type
 
 class Transaction(BaseModel):
-    id: int = Field(ge=1)
+    id: Optional[int] = None
     title: str = Field(min_length=2, max_length=50)
     amount: float = Field(gt=0)
     description: Optional[str] = None
