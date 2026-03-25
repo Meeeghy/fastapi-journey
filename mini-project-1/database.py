@@ -37,7 +37,7 @@ class Database:
         self.cur.execute("""
             INSERT INTO transactions
             VALUES (:id, :title, :amount, :description)
-        """, {"id": new_id, "title": item.title, "amount": item.amount, "description": item.description})
+        """, {"id": new_id, **item.model_dump()})
         self.conn.commit()
         return new_id
 
@@ -46,7 +46,7 @@ class Database:
             UPDATE transactions
             SET title = :title, amount = :amount, description = :description
             WHERE id = :id
-        """, {"id": id, "title": item.title, "amount": item.amount, "description": item.description})
+        """, {"id": new_id, **item.model_dump()})
         self.conn.commit()
         return self.get(id)
 
