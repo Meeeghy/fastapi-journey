@@ -26,3 +26,11 @@ All endpoints use `async def` because FastAPI works well with asynchronous funct
 The `GET /transactions/{transaction_id}` endpoint uses `await asyncio.sleep(1)` 
 to simulate a delay, like when fetching data from a real database.
 This shows how async can handle waiting without freezing the whole server.
+
+## Database
+
+1. `@contextmanager` is a decorator that lets us use a function with the `with` statement. We use it because it automatically closes the database connection when we are done — even if something goes wrong. Without it, we would have to remember to call `db.close()` manually every time, which is easy to forget.
+
+2. `check_same_thread=False` allows SQLite to work with FastAPI. FastAPI handles multiple requests at the same time using different threads, and by default SQLite only allows one thread to use it. Setting this to `False` removes that restriction so our app works correctly.
+
+3. With the old list (`fake_db = []`), all data disappears every time the server restarts because it only exists in memory — like RAM. With SQLite, data is saved to a real file (`sqlite.db`) on the computer, so it stays there even after the server restarts.
