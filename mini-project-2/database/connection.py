@@ -1,7 +1,8 @@
 from beanie import init_beanie, PydanticObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
 from typing import Any, List, Optional
-from pydantic import BaseSettings, BaseModel
+from pydantic_settings import BaseSettings
+from pydantic import BaseModel
 
 
 class Settings(BaseSettings):
@@ -16,8 +17,7 @@ class Settings(BaseSettings):
             document_models=[Event, User]
         )
 
-    class Config:
-        env_file = ".env"
+    model_config = {"env_file": ".env"}
 
 
 class Database:
@@ -44,3 +44,11 @@ class Database:
         if not doc:
             return False
         await doc.update(update_query)
+        return doc
+
+    async def delete(self, id: PydanticObjectId) -> bool:
+        doc = await self.get(id)
+        if not doc:
+            return False
+        await doc.delete()
+        return True
