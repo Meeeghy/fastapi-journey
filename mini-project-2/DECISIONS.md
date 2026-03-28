@@ -23,3 +23,10 @@ Event is the full document that requires all fields when creating a new
 event. EventUpdate has all fields as optional so I can update just one
 thing like the location without having to send all the other fields again.
 Having two separate classes made the update route much simpler to work with.
+
+## 5. Note on Pydantic version
+The PDF was written using Pydantic v1 but our project uses Pydantic v2.
+In v2 the BaseSettings class was moved to a separate package called
+pydantic-settings. So instead of "from pydantic import BaseSettings"
+I used "from pydantic_settings import BaseSettings" and installed
+pydantic-settings to make it work.
