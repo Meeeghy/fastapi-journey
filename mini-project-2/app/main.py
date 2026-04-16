@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
-from app.database.connection import Settings
-from app.routes.users import user_router
+from database.connection import Settings
+from routes.users import user_router
+from routes.events import event_router
 from routes.events import event_router
 import uvicorn
 
