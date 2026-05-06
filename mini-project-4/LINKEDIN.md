@@ -1,2 +1,2 @@
-https://www.linkedin.com/posts/meryem-balili-296769362\_fastapi-websockets-python-share-7457879708630749184-6FSX?utm\_source=share\&utm\_medium=member\_desktop\&rcm=ACoAAForWFIBLgBa0qjPGuoVmGml4LXkFYaeNT4
+https://www.linkedin.com/posts/meryem-balili-296769362_fastapi-websockets-python-ugcPost-7457890407637745665-vTkZ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAForWFIBLgBa0qjPGuoVmGml4LXkFYaeNT4
 
